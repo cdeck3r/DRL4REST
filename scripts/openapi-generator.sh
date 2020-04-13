@@ -112,6 +112,6 @@ do
         -v "${OPENAPI_DIR}":/local \
         $IMAGE generate \
         --input-spec "${API_SPEC_URL}" \
-        --generator-name ${CODE_GEN} \
+        --generator-name "${CODE_GEN}" \
         --output /local/"${API_NAME}"/"${CODE_GEN}"
 done
