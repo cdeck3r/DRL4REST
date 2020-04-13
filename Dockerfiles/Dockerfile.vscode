@@ -1,0 +1,49 @@
+#
+# This dockerfile enables the VS code to be run in browser
+#
+# Source: https://github.com/cdr/code-server
+#
+
+#
+# It uses the codercom/code-server image 
+# and extends it by beneficial tools:
+#
+# * shellcheck (https://github.com/koalaman/shellcheck)
+# * shfmt (https://github.com/mvdan/sh)
+
+
+FROM codercom/code-server@sha256:1e9ec0d17b11b11701782f17a3d6707a60997cf6fc040c0eff2eb558fb1c714f
+
+#FROM codercom/code-server@sha256:55774d69929ceed719db03d756ce1f8425c16716669ebc3c5b41d7ff79434f27
+
+# We download the latest stable release
+# because the ubuntu repository contains an old version
+ARG SHELLCHECK_URL=https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
+
+USER root
+
+RUN apt-get update && apt-get install -y \
+       apt-utils \
+       apt-transport-https \
+       software-properties-common \
+    && add-apt-repository 'deb https://deb.debian.org/debian buster-backports main' \
+    && apt-get update \
+    && apt-get -t buster-backports install -y golang-go \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /tmp/ && cd /tmp \
+    && curl -L -o shellcheck.tar.xz "${SHELLCHECK_URL}" \
+    && cd /tmp \
+    && tar xvf shellcheck.tar.xz \
+    && cp /tmp/shellcheck-stable/shellcheck /usr/local/bin/shellcheck
+
+# LEFTOVER: go-lang install when code-server was on Ubutun 18.04
+#   && add-apt-repository -y ppa:longsleep/golang-backports \
+#   && apt-get update && apt-get install -y \
+#      golang-go 
+
+USER coder
+
+# It's a go thing: installs the latest release of shfmt
+RUN GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt \
+    && touch "$HOME"/.gitconfig

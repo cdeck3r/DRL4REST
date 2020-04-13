@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+# VS code in browser
+# IDE for development running in docker and
+# accessed in browser
+  vscode:
+    build: 
+      context: ./Dockerfiles
+      dockerfile: Dockerfile.vscode
+    container_name: vscode
+    image: vscode:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - vscode:/home/coder/.local/share/code-server
+      - repo:/DRL4RESTRepo
+      - ${VOL_DIR}/.gitconfig:/home/coder/.gitconfig
+    command: ["--auth", "none", "/DRL4RESTRepo"]
+
+# Builder contains all tooling for the BilderSkript application
+# It defines and runs pipelines.
+  apigenerator:
+    image: openapitools/openapi-generator-cli:latest
+    volumes:
+      - repo:/DRL4RESTRepo
+      - log:${APP_ROOT}/log
+      - src:${APP_ROOT}/src
+      - scripts:${APP_ROOT}/scripts
+    stdin_open: true
+    tty: true
+
+
+#
+# Volume definition
+# Note the "ipc" volume for sharing UNIX sockets.
+# 
+volumes:
+  repo:
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOL_DIR}
+  vscode:
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOL_DIR}/vscode
+  log:
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOL_DIR}/log
+  src:
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOL_DIR}/src
+  scripts:
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOL_DIR}/scripts
+

@@ -1,0 +1,7 @@
+{
+    "editor.wordWrap": "wordWrapColumn",
+    "shellformat.path": "/home/coder/go/bin/shfmt",
+    "shellformat.flag": "-i 4 -ci",
+    "shellcheck.enableQuickFix": true,
+    "keyboard.layout": "00000407"
+}
