@@ -30,6 +30,49 @@ services:
     stdin_open: true
     tty: true
 
+# rl-gym
+  rlgym:
+    build: 
+      context: ./Dockerfiles
+      dockerfile: Dockerfile.rlgym
+    container_name: rlgym
+    image: rlgym:latest
+    ports:
+      - "8888:8888"
+    volumes:
+      - log:${APP_ROOT}/log
+      - src:${APP_ROOT}/src
+      - scripts:${APP_ROOT}/scripts
+  # python
+  pyclient:
+    build: 
+      context: ./Dockerfiles
+      dockerfile: Dockerfile.python3
+    container_name: pyclient
+    image: python3:latest
+    volumes:
+      - log:${APP_ROOT}/log
+      - src:${APP_ROOT}/src
+      - scripts:${APP_ROOT}/scripts
+      - openapi:${APP_ROOT}/openapi
+    stdin_open: true
+    tty: true
+  # python
+  pyserver:
+    build: 
+      context: ./Dockerfiles
+      dockerfile: Dockerfile.python3
+    container_name: pyserver
+    image: python3:latest
+    ports: # HOST:CONTAINER
+      - "8000:8080"
+    volumes:
+      - log:${APP_ROOT}/log
+      - src:${APP_ROOT}/src
+      - scripts:${APP_ROOT}/scripts
+      - openapi:${APP_ROOT}/openapi
+    stdin_open: true
+    tty: true
 
 #
 # Volume definition
@@ -61,4 +104,9 @@ volumes:
       type: none
       o: bind
       device: ${VOL_DIR}/scripts
+  openapi:
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOL_DIR}/openapi
 
