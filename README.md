@@ -50,6 +50,7 @@ cd /DRL4REST/scripts
 ./pyserver_setup.sh
 ```
 
+Check the server is running pointing your browser to http://localhost:8000/ui/
 
 ## Development IDE
 
