@@ -25,7 +25,7 @@ Start in project's root dir. Generate API code:
 cd scripts
 openapi-generator.sh
 ```
-It generates python (client) and python-flask (server) code and places in the `openapi` directory. The default API is [wmata.com/rail](https://raw.githubusercontent.com/APIs-guru/openapi-directory/master/APIs/wmata.com/rail-station/1.0/swagger.yaml). 
+It generates python (client) and python-flask (server) code and places in the `openapi` directory. The default API is [thenounproject.com](https://raw.githubusercontent.com/APIs-guru/openapi-directory/master/APIs/thenounproject.com/1.0.0/swagger.yaml). 
 
 Change the behavior with:
 ```

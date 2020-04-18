@@ -23,8 +23,8 @@ PROJECT_DIR=$(readlink -e "${SCRIPT_DIR}"/..)
 OPENAPI_DIR="$PROJECT_DIR/openapi"
 
 # Default API generation parameters
-API_SPEC_URL="https://raw.githubusercontent.com/APIs-guru/openapi-directory/master/APIs/wmata.com/rail-station/1.0/swagger.yaml"
-API_NAME=rail
+API_SPEC_URL="https://raw.githubusercontent.com/APIs-guru/openapi-directory/master/APIs/thenounproject.com/1.0.0/swagger.yaml"
+API_NAME=thenounproject
 
 # Image parameter initialization
 IMG_NAME="openapitools/openapi-generator-cli"
@@ -45,24 +45,25 @@ usage() {
 
 PARAM_PARSE=0
 while getopts "ha:n:" opt; do
-  PARAM_PARSE=1
-  case ${opt} in
-    a ) 
-      API_SPEC_URL=$OPTARG
-      ;;
-    n ) 
-      API_NAME=$OPTARG
-      ;;
-    h ) usage
-        exit 0
-      ;;
-    * )
-       usage 
-       exit 1
-       ;;
-  esac
+    PARAM_PARSE=1
+    case ${opt} in
+        a)
+            API_SPEC_URL=$OPTARG
+            ;;
+        n)
+            API_NAME=$OPTARG
+            ;;
+        h)
+            usage
+            exit 0
+            ;;
+        *)
+            usage
+            exit 1
+            ;;
+    esac
 done
-shift $((OPTIND -1))
+shift $((OPTIND - 1))
 
 if [ $PARAM_PARSE -eq 0 ]; then
     log_echo "INFO" "No params given. Use default params."
@@ -91,7 +92,6 @@ else
     rm -rf "${OPENAPI_DIR}/${API_NAME:?}/"*
 fi
 
-
 log_echo "INFO" "Checks done."
 
 #########################################
@@ -102,10 +102,9 @@ log_echo "INFO" "Checks done."
 
 log_echo "INFO" "Start generating API code"
 
-CODE_GENERATORS=( "python" "python-flask" )
+CODE_GENERATORS=("python" "python-flask")
 
-for CODE_GEN in "${CODE_GENERATORS[@]}"
-do
+for CODE_GEN in "${CODE_GENERATORS[@]}"; do
     log_echo "INFO" "Generate API for: $CODE_GEN in /local/${API_NAME}/${CODE_GEN}"
 
     docker run --rm \
