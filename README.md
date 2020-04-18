@@ -82,3 +82,10 @@ docker-compose up -d vscode
 ```
 
 Point your browser to it: https://127.0.0.1:8080
+
+The vscode docker image comes pre-installed with following extentions especially for working with shell scripts.
+
+* [shfmt](https://github.com/mvdan/sh)
+* [shellchecker](https://github.com/koalaman/shellcheck)
+
+The shellchecker runs on-the-fly and provides quick fixes for better coding quality of shell scripts. The shfmt tool reformats the shell script. Use `shift + alt + f` to reformat the script.
