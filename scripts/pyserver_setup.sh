@@ -17,7 +17,6 @@ SCRIPT_NAME=$0
 
 # some variables
 PROJECT_DIR=$(readlink -f "${SCRIPT_DIR}"/..)
-OPENAPI_SERVER_DIR="$PROJECT_DIR/openapi/rail/python-flask"
 OPENAPI_SERVER_DIR="$PROJECT_DIR/openapi/thenounproject/python-flask"
 
 

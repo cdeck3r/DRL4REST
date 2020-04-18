@@ -18,8 +18,8 @@ services:
       - ${VOL_DIR}/.gitconfig:/home/coder/.gitconfig
     command: ["--auth", "none", "/DRL4RESTRepo"]
 
-# Builder contains all tooling for the BilderSkript application
-# It defines and runs pipelines.
+# apigenerator downloads the ready-made api generator
+# from the openapitools
   apigenerator:
     image: openapitools/openapi-generator-cli:latest
     volumes:

@@ -10,9 +10,9 @@ import openapi_client
 from openapi_client.rest import ApiException
 from pprint import pprint
 
-
 # Defining host is optional and default to http://api.thenounproject.com
-configuration.host = "http://api.thenounproject.com"
+configuration = openapi_client.Configuration()
+configuration.host = "http://pyserver:8080"
 # Enter a context with an instance of the API client
 with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class

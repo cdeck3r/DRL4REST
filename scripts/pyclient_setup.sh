@@ -17,7 +17,6 @@ SCRIPT_NAME=$0
 
 # some variables
 PROJECT_DIR=$(readlink -f "${SCRIPT_DIR}"/..)
-OPENAPI_CLIENT_DIR="$PROJECT_DIR/openapi/rail/python"
 OPENAPI_CLIENT_DIR="$PROJECT_DIR/openapi/thenounproject/python"
 
 # include some common functions
