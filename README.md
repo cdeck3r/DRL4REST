@@ -1,6 +1,17 @@
 # DRL4REST
 Deep Reinforcement Learning for REST interfaces
 
+## Preps
+
+Create a `.env` file in the project's root specifying global environment variables.
+```
+# In the container, this is the directory where the code is found
+APP_ROOT=/DRL4REST
+
+# the HOST directory containing directories to be mounted into containers
+# e.g. /home/username/DRL4REST
+VOL_DIR=<project root>
+```
 
 ## Quickstart
 
@@ -54,6 +65,16 @@ Check the server is running pointing your browser to http://localhost:8000/ui/
 
 ## Development IDE
 
+Add a `.gitconfig` file  in the project's root with the following content.
+
+```
+[user]
+	name = <git user name>
+	email = <mail address>
+[credential]
+	helper = cache
+```
+
 Spin up vscode container
 
 ```bash
@@ -61,4 +82,3 @@ docker-compose up -d vscode
 ```
 
 Point your browser to it: https://127.0.0.1:8080
-
