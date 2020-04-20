@@ -1,0 +1,87 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+        "title":"CartPole-v0",
+        "version":"2.0"
+    },
+    "servers": [
+        {"url":"https://localhost/api/v2"}
+    ],
+    "components": {
+        "schemas": {
+            "CartPole": {
+                "type":"object",
+                "properties": {
+                    "position": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "velocity":{
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "direction":{
+                        "type": "string",
+                        "enum": ["left","right"]
+                    },
+                    "pole":{
+                        "type": "object",
+                        "properties": {
+                            "angle": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "velocity":{
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/cartpole": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/vnd.cartpole+json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/CartPole"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/right": {
+            "post": {
+                "description":"",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+           
+        },
+        "/left": {
+            "post": {
+                "description":"",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}

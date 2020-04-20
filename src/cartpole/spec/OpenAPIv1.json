@@ -1,0 +1,133 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+        "title":"CartPole-v0",
+        "version":"1.0"
+    },
+    "servers": [
+        {"url":"https://localhost/api/v1"}
+    ],
+    "components": {
+        "schemas": {
+            "Direction": {
+                "type":"object",
+                "properties": {
+                    "direction": {
+                        "type": "string",
+                        "enum": ["left","right"]
+                    }
+                }
+            },
+            "Pole": {
+                "type":"object",
+                "properties": {
+                    "angle": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "velocity":{
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "Cart": {
+                "type":"object",
+                "properties": {
+                    "position": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "velocity":{
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "direction":{
+                        "type": "string",
+                        "enum": ["left","right"]
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/cart/pole": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/vnd.cartpole.pole+json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Pole"
+                                }
+                            },
+                            "application/vnd.cartpole.pole+xml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/cart": {
+            "put": {
+                "description":"",
+                "parameters": [],
+                "requestBody":{
+                    "description": "",
+                    "content": {
+                        "application/vnd.cartpole.direction+json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Direction"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/vnd.cartpole.cart+json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Cart"
+                                }
+                            },
+                            "application/vnd.cartpole.cart+xml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/vnd.cartpole.cart+json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Cart"
+                                }
+                            },
+                            "application/vnd.cartpole.cart+xml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
