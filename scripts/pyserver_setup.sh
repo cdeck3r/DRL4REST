@@ -92,4 +92,5 @@ log_echo "INFO" "Install requirements"
 pip3 install -r requirements.txt || exit
 
 log_echo "INFO" "Start server"
+export PYTHONPATH=${PROJECT_DIR}/src
 python3 -m openapi_server
