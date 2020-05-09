@@ -1,0 +1,25 @@
+#
+# Dockerfile for working with DEAP - a Python framework for genetic programming
+# DEAP: https://github.com/deap/deap
+#
+# The file sources from one of the standard jupyter notebook. 
+# Source: https://jupyter-docker-stacks.readthedocs.io/en/latest/
+#
+
+FROM jupyter/scipy-notebook
+
+USER root
+
+# Upgrade pip
+RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# install graphviz
+RUN apt-get update \
+&&  apt-get install -y graphviz libgraphviz-dev \
+&&  rm -rf /var/lib/apt/lists/*
+
+USER $NB_UID
+
+# Install DEAP (https://github.com/deap/deap)
+RUN pip install deap pygraphviz
+

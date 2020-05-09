@@ -62,7 +62,16 @@ Confirm that you can successfully download the API spec from the `pyserver` cont
  wget http://pyserver:8080/openapi.json
  ```
 
+## Genetic Programming
 
+Genetic Programming (GP) creates the program behind the REST interface. When a client sends a request to the REST interface, the created program generates an reply sent back to client. For GP we use the python [DEAP](https://github.com/deap/deap) framework. It is installed in a jupyter-scipy docker stack image.
+
+Spin up the jupyscipy container
+```bash
+docker-compose up -d jupyscipy
+```
+
+Point your browser to http://localhost:8008 and test an example GP by loading and running the `gp_test.ipynb`. It will find a regression function from data. The resulting tree graph is ![graph](notebooks/graph.png). It represents the regression function found by GP.
 
 ## Development IDE
 

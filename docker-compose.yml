@@ -73,6 +73,26 @@ services:
       - openapi:${APP_ROOT}/openapi
     stdin_open: true
     tty: true
+  # jupyter scipy docker image
+  jupyscipy:
+    build: 
+      context: ./Dockerfiles
+      dockerfile: Dockerfile.jupyscipy
+    container_name: jupyscipy
+    image: jupyscipy:latest
+    ports: # HOST:CONTAINER
+      - "8008:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - log:${APP_ROOT}/log
+      - src:${APP_ROOT}/src
+      - scripts:${APP_ROOT}/scripts
+      - notebooks:/home/jovyan/work
+    command: ["start.sh", "jupyter", "lab", "--LabApp.token=''"]
+
+#    command: ["start.sh", "jupyter lab", "--LabApp.token=''"]
+
 
 #
 # Volume definition
@@ -109,4 +129,9 @@ volumes:
       type: none
       o: bind
       device: ${VOL_DIR}/openapi
+  notebooks:
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOL_DIR}/notebooks
 
