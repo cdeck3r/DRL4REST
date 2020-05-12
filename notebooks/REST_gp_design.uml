@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam componentStyle uml2
+
+actor client
+boundary "OpenAPI REST\n interface" as RESTinterface
+control "REST controller" as RESTcontroller
+entity ServerModel
+
+client -> RESTinterface: request
+RESTinterface -> RESTcontroller: << call >>
+
+activate RESTcontroller
+
+note over RESTcontroller 
+software created by
+genetic programming
+endnote
+
+RESTcontroller -> ServerModel: << CRUD >>
+ServerModel --> RESTcontroller: done
+RESTcontroller -> RESTinterface: returned data type
+
+deactivate RESTcontroller
+
+RESTinterface -> client: response
+@enduml

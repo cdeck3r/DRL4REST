@@ -71,7 +71,10 @@ Spin up the jupyscipy container
 docker-compose up -d jupyscipy
 ```
 
-Point your browser to http://localhost:8008 and test an example GP by loading and running the `gp_test.ipynb`. It will find a regression function from data. The resulting tree graph is ![graph](notebooks/graph.png). It represents the regression function found by GP.
+Point your browser to http://localhost:8008 and test an example GP by loading and running the `gp_test.ipynb`. It will find a regression function from data. The following image shows the  resulting tree graph. It represents the regression function found by GP.
+
+![graph](notebooks/graph.png)
+
 
 ## Development IDE
 
