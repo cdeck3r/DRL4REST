@@ -73,9 +73,9 @@ Spin up the jupyscipy container
 docker-compose up -d jupyscipy
 ```
 
-Point your browser to http://localhost:8008 and test an example GP by loading and running the [`gp_test.ipynb`](blob/master/notebooks/gp_test.ipynb). It will find a regression function from data. A [tree graph](notebooks/graph.png) represents the regression function found by GP.
+Point your browser to http://localhost:8008 and test an example GP by loading and running the [`gp_test.ipynb`](notebooks/gp_test.ipynb). It will find a regression function from data. A [tree graph](notebooks/graph.png) represents the regression function found by GP.
 
-The notebook [`gp_cartpole_server.ipynb`](blob/master/notebooks/gp_cartpole_server.ipynb) shows the GP approach applied to the [cartpole](https://en.wikipedia.org/wiki/Inverted_pendulum) example. 
+The notebook [`gp_cartpole_server.ipynb`](notebooks/gp_cartpole_server.ipynb) shows the GP approach applied to the [cartpole](https://en.wikipedia.org/wiki/Inverted_pendulum) example. 
 
 
 ## Development IDE
