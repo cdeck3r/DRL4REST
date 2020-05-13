@@ -64,6 +64,8 @@ Confirm that you can successfully download the API spec from the `pyserver` cont
 
 ## Genetic Programming
 
+Generally, we do not know the service behavior behind a REST interface, if there is only the interfac specification available. As a consequence, we plug-in a simulation, which is essentially a piece of code generating valid responses to concrete requests. 
+
 Genetic Programming (GP) creates the program behind the REST interface. When a client sends a request to the REST interface, the created program generates an reply sent back to client. For GP we use the python [DEAP](https://github.com/deap/deap) framework. It is installed in a jupyter-scipy docker stack image.
 
 Spin up the jupyscipy container
@@ -71,9 +73,9 @@ Spin up the jupyscipy container
 docker-compose up -d jupyscipy
 ```
 
-Point your browser to http://localhost:8008 and test an example GP by loading and running the `gp_test.ipynb`. It will find a regression function from data. The following image shows the  resulting tree graph. It represents the regression function found by GP.
+Point your browser to http://localhost:8008 and test an example GP by loading and running the [`gp_test.ipynb`](blob/master/notebooks/gp_test.ipynb). It will find a regression function from data. A [tree graph](notebooks/graph.png) represents the regression function found by GP.
 
-![graph](notebooks/graph.png)
+The notebook [`gp_cartpole_server.ipynb`](blob/master/notebooks/gp_cartpole_server.ipynb) shows the GP approach applied to the [cartpole](https://en.wikipedia.org/wiki/Inverted_pendulum) example. 
 
 
 ## Development IDE

@@ -88,11 +88,9 @@ services:
       - log:${APP_ROOT}/log
       - src:${APP_ROOT}/src
       - scripts:${APP_ROOT}/scripts
+      - openapi:${APP_ROOT}/openapi      
       - notebooks:/home/jovyan/work
     command: ["start.sh", "jupyter", "lab", "--LabApp.token=''"]
-
-#    command: ["start.sh", "jupyter lab", "--LabApp.token=''"]
-
 
 #
 # Volume definition
@@ -100,38 +98,44 @@ services:
 # 
 volumes:
   repo:
+    driver: local
     driver_opts:
       type: none
       o: bind
       device: ${VOL_DIR}
   vscode:
+    driver: local
     driver_opts:
       type: none
       o: bind
       device: ${VOL_DIR}/vscode
   log:
+    driver: local
     driver_opts:
       type: none
       o: bind
       device: ${VOL_DIR}/log
   src:
+    driver: local
     driver_opts:
       type: none
       o: bind
       device: ${VOL_DIR}/src
   scripts:
+    driver: local
     driver_opts:
       type: none
       o: bind
       device: ${VOL_DIR}/scripts
   openapi:
+    driver: local
     driver_opts:
       type: none
       o: bind
       device: ${VOL_DIR}/openapi
   notebooks:
+    driver: local
     driver_opts:
       type: none
-      o: bind
       device: ${VOL_DIR}/notebooks
-
+      o: bind
