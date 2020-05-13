@@ -25,7 +25,7 @@ Start in project's root dir. Generate API code:
 cd scripts
 openapi-generator.sh
 ```
-It generates python (client) and python-flask (server) code and places in the `openapi` directory. The default API is [thenounproject.com](https://raw.githubusercontent.com/APIs-guru/openapi-directory/master/APIs/thenounproject.com/1.0.0/swagger.yaml). 
+It generates python (client) and python-flask (server) code and places in the `openapi` directory. The default API is [CartPole-v0 version 1.0](src/cartpole/spec/OpenAPIv1.json). 
 
 Change the behavior with:
 ```

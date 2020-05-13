@@ -23,8 +23,6 @@ PROJECT_DIR=$(readlink -e "${SCRIPT_DIR}"/..)
 OPENAPI_DIR="$PROJECT_DIR/openapi"
 
 # Default API generation parameters
-API_SPEC_URL="https://raw.githubusercontent.com/APIs-guru/openapi-directory/master/APIs/thenounproject.com/1.0.0/swagger.yaml"
-API_NAME=thenounproject
 # REST API for cartpole (courtesy by sebastian kotstein)
 API_SPEC_URL="https://raw.githubusercontent.com/cdeck3r/DRL4REST/master/src/cartpole/spec/OpenAPIv1.json"
 API_NAME=cartpole

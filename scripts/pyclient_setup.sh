@@ -17,7 +17,7 @@ SCRIPT_NAME=$0
 
 # some variables
 PROJECT_DIR=$(readlink -f "${SCRIPT_DIR}"/..)
-OPENAPI_CLIENT_DIR="$PROJECT_DIR/openapi/thenounproject/python"
+OPENAPI_CLIENT_DIR="$PROJECT_DIR/openapi/cartpole/python"
 
 # include some common functions
 # shellcheck source=/dev/null
