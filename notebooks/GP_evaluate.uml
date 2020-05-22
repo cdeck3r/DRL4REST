@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam componentStyle uml2
+
+TestDefaultController <|-- GP_TestDefaultController 
+
+class TestDefaultController
+note left: created by \nopenapi generator
+
+class evaluate <<function>> #white
+evaluate o--> GP_TestDefaultController 
+
+class gp_controller <<function>>
+note left: created by \nPython DEAP
+GP_TestDefaultController ..> gp_controller : <<MonkeyPatching>>
+
+
+class GP_TestDefaultController {
+ +test_cart_get()
+ +config_endpoint(controller_func, ..)
+}
+
+class TestDefaultController {
+ +test_cart_get()
+}
+
+
+hide <<function>> circle
+hide <<function>> members
+@enduml
