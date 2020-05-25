@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam componentStyle uml2
+
+participant "evaluate()" as evaluate
+participant GP_TestDefaultController 
+participant MonkeyPatching
+participant TestDefaultController 
+participant FlaskApp
+participant GP_Controller
+
+activate evaluate
+evaluate -> GP_Controller : set_controller_func()
+evaluate -> GP_TestDefaultController ** : <<new>>
+GP_TestDefaultController  -> MonkeyPatching ** : <<new>>
+evaluate -> GP_TestDefaultController : endpoint_config()
+activate GP_TestDefaultController
+
+GP_TestDefaultController -> MonkeyPatching : patch()
+
+evaluate -> GP_TestDefaultController : test_cart_get()
+GP_TestDefaultController -> TestDefaultController : test_cart_get()
+
+TestDefaultController -> FlaskApp : <<request>>
+FlaskApp -> GP_Controller : gp_controller_func()
+FlaskApp --> TestDefaultController : Response
+TestDefaultController --> GP_TestDefaultController : Response
+GP_TestDefaultController --> evaluate : score
+deactivate GP_TestDefaultController
+deactivate evaluate
+@enduml
