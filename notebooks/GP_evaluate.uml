@@ -1,29 +1,57 @@
 @startuml
 skinparam monochrome true
 skinparam componentStyle uml2
+skinparam linetype polyline
 
-TestDefaultController <|-- GP_TestDefaultController 
+package "openapi_server.test" #DDDDDD {
+    class TestDefaultController
+    note right: created by\nopenapi generator
+}
 
-class TestDefaultController
-note left: created by \nopenapi generator
-
-class evaluate <<function>> #white
-evaluate o--> GP_TestDefaultController 
-
-class gp_controller <<function>>
-note left: created by \nPython DEAP
-GP_TestDefaultController ..> gp_controller : <<MonkeyPatching>>
-
-
-class GP_TestDefaultController {
- +test_cart_get()
- +config_endpoint(controller_func, ..)
+package "connexion" #DDDDDD {
+    class FlaskApp
 }
 
 class TestDefaultController {
  +test_cart_get()
 }
 
+together {
+   class GP_TestDefaultController
+   class GP_Controller
+   class MonkeyPatching
+   class _gp_controller <<function>>
+   note right: created by Python DEAP
+}
+
+   class evaluate <<function>>
+
+class GP_TestDefaultController {
+ +test_cart_get()
+ +endpoint_config(..)
+}
+
+class MonkeyPatching {
+ +patch()
+}
+
+class GP_Controller {
+ {static} _gp_controller
+ {static} +set_controller_func(func)
+ {static} +gp_controller_func()
+}
+
+
+GP_TestDefaultController --|> TestDefaultController 
+GP_TestDefaultController o--> MonkeyPatching 
+
+TestDefaultController o--> FlaskApp
+
+GP_Controller --> _gp_controller
+FlaskApp ..> _gp_controller : <<MonkeyPatching>>
+
+evaluate o--> GP_TestDefaultController 
+evaluate o--> GP_Controller 
 
 hide <<function>> circle
 hide <<function>> members
