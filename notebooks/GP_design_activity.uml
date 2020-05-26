@@ -11,7 +11,7 @@ repeat :evolve();
 :Patch DefaultController 
 cart_get();
 
-|openapi_server.tests|
+|openapi_server.test|
 partition GP_TestDefaultController {
 :Run test_cart_get();
 }
@@ -19,7 +19,7 @@ partition GP_TestDefaultController {
 |openapi_server.controllers|
   :Run GP_Controller;
 
-|openapi_server.tests|
+|openapi_server.test|
 partition GP_TestDefaultController {
   :Verify response;
   :Assert response 
