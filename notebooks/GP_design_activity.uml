@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam componentStyle uml2
+
+|Genetic\nProgramming|
+start
+repeat :evolve();
+:Create GP_Controller;
+
+| main |
+:Patch DefaultController 
+cart_get();
+
+|openapi_server.tests|
+partition GP_TestDefaultController {
+:Run test_cart_get();
+}
+
+|openapi_server.controllers|
+  :Run GP_Controller;
+
+|openapi_server.tests|
+partition GP_TestDefaultController {
+  :Verify response;
+  :Assert response 
+status code;
+}
+
+
+
+|Genetic\nProgramming|
+:evaluate();
+
+repeat while (score improves?)
+stop
+@enduml
