@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam componentStyle uml2
+
+| User |
+start
+:Provide interface
+specification;
+
+|OpenAPI\nGenerator|
+:Create server stub;
+
+|Genetic\nProgramming|
+
+repeat :Synthesize controller\nprogram;
+
+:Test and evaluate;
+repeat while (score improves?)
+
+| Simulation |
+
+:Deep Reinforcement
+Learning on simulation;
+
+| Real Service |
+
+:Deep Reinforcement
+Learning on application
+for interoperability;
+
+stop
+@enduml
