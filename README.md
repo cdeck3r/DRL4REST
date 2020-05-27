@@ -1,5 +1,19 @@
 # DRL4REST
-Deep Reinforcement Learning for REST interfaces
+In Deep Reinforcement Learning for REST interfaces (DRL4REST) we aim for a sim-to-real approach learning REST interfaces to achieve interoperability. This is understood as a rational goal-driven behavior of the service.
+
+It works in two steps
+
+1. Train a deep reinforcement learning (DRL) algorithm on a simulated service behavior
+1. Fine-tune the DRL on the real application service to achieve interoperability
+
+The simulated service behavior is one of many possible behaviors of the real application service. This research investigates how we can improve learning the real service when probing the space of simulated service behaviors.
+
+Generally, we do not know the service behavior behind a REST interface, if there is only the interface specification available. As a consequence, we plug-in a simulation created by Genetic Programming (GP), which essentially results in a piece of code generating valid responses to concrete requests. In contrast to mocking approaches, GP enables more complex behaviors. 
+
+The following workflow illustrates the DRL4REST approach starting with an interface specification as input.
+
+![DRL4REST workflow](http://www.plantuml.com/plantuml/png/KypCIyufJKajBSfHo2WfAIYsqjSlIYpNIyyioIXDAYrEBKhEpoj9pIlHIyxFrKzEIKtEDYxITmdoCGbo3GxHpqqiBab5yEFByukoqtBoo_LAStC0)
+
 
 ## Preps
 
@@ -64,7 +78,7 @@ Confirm that you can successfully download the API spec from the `pyserver` cont
 
 ## Genetic Programming
 
-Generally, we do not know the service behavior behind a REST interface, if there is only the interfac specification available. As a consequence, we plug-in a simulation, which is essentially a piece of code generating valid responses to concrete requests. 
+Generally, we do not know the service behavior behind a REST interface, if there is only the interface specification available. As a consequence, we plug-in a simulation, which is essentially a piece of code generating valid responses to concrete requests. 
 
 Genetic Programming (GP) creates the program behind the REST interface. When a client sends a request to the REST interface, the created program generates an reply sent back to client. For GP we use the python [DEAP](https://github.com/deap/deap) framework. It is installed in a jupyter-scipy docker stack image.
 
