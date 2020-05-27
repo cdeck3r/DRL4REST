@@ -12,20 +12,20 @@ specification;
 
 |Genetic\nProgramming|
 
-repeat :Synthesize controller\nprogram;
+repeat :Synthesize controller\nprogram for service;
 
 :Test and evaluate;
 repeat while (score improves?)
 
 | Simulation |
 
-:Deep Reinforcement
-Learning on simulation;
+:Deep Reinforcement Learning 
+on simulated service;
 
 | Real Service |
 
-:Deep Reinforcement
-Learning on application
+:Deep Reinforcement Learning 
+on application service 
 for interoperability;
 
 stop
