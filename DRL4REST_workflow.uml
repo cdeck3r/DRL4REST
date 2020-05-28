@@ -4,7 +4,7 @@ skinparam componentStyle uml2
 
 | User |
 start
-:Provide interface
+:Provide REST interface
 specification;
 
 |OpenAPI\nGenerator|
@@ -14,8 +14,12 @@ specification;
 
 repeat :Synthesize controller\nprogram for service;
 
-:Test and evaluate;
-repeat while (score improves?)
+:Test controller on 
+various REST requests; 
+
+:Evaluate fitness;
+
+repeat while (next generation)
 
 | Simulation |
 
