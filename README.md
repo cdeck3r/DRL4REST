@@ -1,5 +1,6 @@
 # DRL4REST
-In Deep Reinforcement Learning for REST interfaces (DRL4REST) we aim for a sim-to-real approach learning REST interfaces to achieve interoperability. This is understood as a rational goal-driven behavior of the service.
+
+In Deep Reinforcement Learning for REST (DRL4REST) we aim for a sim-to-real approach learning REST interfaces to achieve interoperability. Latter is conceived as a rational goal-driven behavior of the service.
 
 It works in two steps
 
@@ -80,7 +81,7 @@ Confirm that you can successfully download the API spec from the `pyserver` cont
 
 Generally, we do not know the service behavior behind a REST interface, if there is only the interface specification available. As a consequence, we plug-in a simulation, which is essentially a piece of code generating valid responses to concrete requests. 
 
-Genetic Programming (GP) creates the program behind the REST interface. When a client sends a request to the REST interface, the created program generates an reply sent back to client. For GP we use the python [DEAP](https://github.com/deap/deap) framework. It is installed in a jupyter-scipy docker stack image.
+Genetic Programming (GP) creates the program behind the REST interface. When a client sends a request to the REST interface, the created program generates a reply sent back to the client. For GP we use the python [DEAP](https://github.com/deap/deap) framework. It is installed in a jupyter-scipy docker image.
 
 Spin up the jupyscipy container
 ```bash
