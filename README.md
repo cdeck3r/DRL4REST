@@ -92,6 +92,9 @@ Point your browser to http://localhost:8008 and test an example GP by loading an
 
 The notebook [`gp_cartpole_server.ipynb`](notebooks/gp_cartpole_server.ipynb) shows the GP approach applied to the [cartpole](https://en.wikipedia.org/wiki/Inverted_pendulum) example. 
 
+The following tree graph displays the program found by GP for an idempotent REST behavior when calling `GET /api/v1/cart`.
+
+![GP created cart_get controller](notebooks/gp_controller.png)
 
 ## Development IDE
 
