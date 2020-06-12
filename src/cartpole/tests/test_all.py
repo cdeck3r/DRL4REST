@@ -18,5 +18,6 @@ if __name__ == '__main__':
     # add each TestCase to TestSuite
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test_CartpoleServer)
     suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(Test_GP_TestDefaultController))
+    suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(Test_MonkeyPatching))
     # run suite
     unittest.TextTestRunner(verbosity=2).run(suite)
