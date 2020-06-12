@@ -1,3 +1,4 @@
+import conftest
 
 import unittest
 from cartpole.gprest.gp_test_default_controller import GP_TestDefaultController
@@ -19,5 +20,5 @@ class Test_GP_TestDefaultController(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test_CartpoleServer)
-    unittest.TextTestRunner().run(suite)
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test_GP_TestDefaultController)
+    unittest.TextTestRunner(verbosity=2).run(suite)

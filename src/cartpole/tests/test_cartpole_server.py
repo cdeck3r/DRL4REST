@@ -1,3 +1,5 @@
+import conftest
+
 import unittest
 from cartpole.gprest.cartpole_server import CartpoleServer
 from openapi_server.models import Cart
@@ -39,4 +41,4 @@ class Test_CartpoleServer(unittest.TestCase):
 
 if __name__ == '__main__':
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test_CartpoleServer)
-    unittest.TextTestRunner().run(suite)
+    unittest.TextTestRunner(verbosity=2).run(suite)
