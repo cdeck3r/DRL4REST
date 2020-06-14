@@ -16,12 +16,14 @@ class CartpoleServer(object):
     # state as class variable
     _cart = None
     _pole = None
+    _direction = None
 
     # set the class in a defined (initial) state
     @classmethod
     def reset(cls):
         cls._cart = None
         cls._pole = None
+        cls._direction = None
     
     @classmethod
     def create_cart(cls):
@@ -29,7 +31,7 @@ class CartpoleServer(object):
         velocity = random.random()
         # we know the values from the models, e.g.
         #   models/cart.py or models/direction.py
-        direction = random.choice(["left", "right"])
+        direction = random.choice(['left', 'right'])
         cls._cart = Cart(position=position, velocity=velocity, direction=direction)
 
     @classmethod
@@ -66,6 +68,26 @@ class CartpoleServer(object):
     def delete_pole(cls):
         cls._pole = None
 
+    @classmethod
+    def create_direction(cls):
+        direction = random.choice(['left', 'right'])
+        # we know the values from the models, e.g.
+        #   models/pole.py 
+        cls._direction = Direction(direction=direction)
+
+    @classmethod
+    def read_direction(cls):
+        return cls._direction
+    
+    @classmethod
+    def update_direction(cls, direction):
+        cls._direction = direction
+
+    @classmethod
+    def delete_direction(cls):
+        cls._direction = None
+
+
 #############################################
 #
 #############################################
@@ -80,7 +102,7 @@ def add_CRUD_pset(pset, sm, model_name):
     sm : ServerModel
         the ServerModel with the CRUD functions
     model_name : str
-        the name of the OpenAPI model referring to its CRUD functions in the ServerModel
+        the name of the OpenAPI model referring to its CRUD functions in the ServerModel ['cart' | 'pole' | 'direction']
         
     Returns
     -------
@@ -101,9 +123,17 @@ def add_CRUD_pset(pset, sm, model_name):
         pset.addTerminal(sm.update_pole)
         pset.addTerminal(sm.delete_pole)
         
+    def pset_direction():
+        # cart CRUD functions
+        pset.addTerminal(sm.create_direction)
+        pset.addTerminal(sm.read_direction)
+        pset.addTerminal(sm.update_direction)
+        pset.addTerminal(sm.delete_direction)
+
     options = {
         'cart': pset_cart,
         'pole': pset_pole,
+        'direction': pset_direction,
     }
 
     # add CRUD functions to pset

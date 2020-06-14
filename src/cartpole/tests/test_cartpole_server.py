@@ -56,9 +56,7 @@ class Test_CartpoleServer(unittest.TestCase):
         model_name = 'pole'
         self._crud_funcs(model_name)
 
-    @unittest.expectedFailure
     def test_CRUD_direction(self):
-        # currently not implemented yet
         model_name = 'direction'
         self._crud_funcs(model_name)
 
