@@ -113,6 +113,19 @@ class GP_TestDefaultController(TestDefaultController):
                    )
         return response
 
+    def test_cart_put(self, direction):
+        """Overrides the default test_cart_put()
+
+           Checks for the correct content_type in the responds.
+        """
+        response = super().test_cart_put(direction) #assert200(response)
+        # add another important assertion
+        self.assertEqual(response.content_type, 
+                    'application/vnd.cartpole.cart+json', 
+                    'Please check the openapi.yaml for unique content-type in response section'
+                   )
+        return response
+
     # safe version of test_cart_get(), i.e. avoids exceptions 
     def safe_test_cart_get(self):
         try:
