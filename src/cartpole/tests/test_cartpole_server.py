@@ -42,21 +42,25 @@ class Test_CartpoleServer(unittest.TestCase):
         c = self.s.read_cart()
         self.assertEqual(type(c), type(None))
 
-    def test_CRUD_cart(self):
-        model_name = 'cart'
-        
+    def _crud_funcs(self, model_name):
         model_crud = [crud_func + '_' + model_name for crud_func in ['create', 'read', 'update', 'delete']] 
         cps_model_func = [m for m in self.cps_crud_func if m.endswith(model_name)]
 
         self.assertEqual(set(cps_model_func), set(model_crud)) 
+
+    def test_CRUD_cart(self):
+        model_name = 'cart'
+        self._crud_funcs(model_name)        
 
     def test_CRUD_pole(self):
         model_name = 'pole'
-        
-        model_crud = [crud_func + '_' + model_name for crud_func in ['create', 'read', 'update', 'delete']] 
-        cps_model_func = [m for m in self.cps_crud_func if m.endswith(model_name)]
+        self._crud_funcs(model_name)
 
-        self.assertEqual(set(cps_model_func), set(model_crud)) 
+    @unittest.expectedFailure
+    def test_CRUD_direction(self):
+        # currently not implemented yet
+        model_name = 'direction'
+        self._crud_funcs(model_name)
 
 
 if __name__ == '__main__':
