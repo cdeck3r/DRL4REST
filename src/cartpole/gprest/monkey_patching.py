@@ -85,3 +85,41 @@ class MonkeyPatching:
             return True
         
         return False
+
+class GP_Controller:
+    """Encapsulates the gp_controller function for execution
+
+    MonkeyPatching requires a function with a `__code__` section. However, the GP created controller program is a partial function, which does not have a `__code__` section. As a consequence, the `GP_Controller` static class wraps the GP created partial function into a function with a `__code__` section.
+
+    Src: https://stackoverflow.com/questions/56881670/partial-function-object-has-no-attribute-code
+    
+    """
+    
+    _gp_controller = None
+    
+    @classmethod
+    def set_controller_func(cls, func):
+        cls._gp_controller = func
+
+    @staticmethod
+    def gp_controller_func():
+        """ Runs the gp_controller.
+        
+            gp_controller_func is called from a different scope, so it needs to 
+            search through all imported modules for the GP_Controller class in
+            order to access the class variable _gp_controller.
+
+            CAUTION: 
+            This is fragile. It finds the first occurance of the GP_Controller
+            within all imported modules.
+        """
+        gpc_pointer = None
+        for m_name in sys.modules:
+            try:
+                gpc_pointer = getattr(sys.modules[m_name], 'GP_Controller')
+                break
+            except AttributeError:
+                continue
+        return gpc_pointer._gp_controller()
+    
+gpc = GP_Controller

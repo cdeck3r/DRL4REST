@@ -100,12 +100,40 @@ class GP_TestDefaultController(TestDefaultController):
                    )
         return response
 
+    def test_cart_pole_get(self):
+        """Overrides the default test_cart_pole_get()
+
+           Checks for the correct content_type in the responds.
+        """
+        response = super().test_cart_pole_get() #assert200(response)
+        # add another important assertion
+        self.assertEqual(response.content_type, 
+                    'application/vnd.cartpole.pole+json', 
+                    'Please check the openapi.yaml for unique content-type in response section'
+                   )
+        return response
+
     # safe version of test_cart_get(), i.e. avoids exceptions 
     def safe_test_cart_get(self):
         try:
             response = super().test_cart_get() #assert200(response)        
             self.assertEqual(response.content_type, 
                         'application/vnd.cartpole.cart+json', 
+                        'Please check the openapi.yaml for unique content-type in response section'
+                       )
+        except AssertionError as error:
+            # score an assertion
+            self.score += self._assert_score
+            return
+            
+        self.score_response(response)
+
+    # safe version of test_cart_pole_get(), i.e. avoids exceptions 
+    def safe_test_cart_pole_get(self):
+        try:
+            response = super().test_cart_pole_get() #assert200(response)        
+            self.assertEqual(response.content_type, 
+                        'application/vnd.cartpole.pole+json', 
                         'Please check the openapi.yaml for unique content-type in response section'
                        )
         except AssertionError as error:
