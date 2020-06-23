@@ -137,3 +137,19 @@ The vscode docker image comes pre-installed with following extentions especially
 * [shellchecker](https://github.com/koalaman/shellcheck)
 
 The shellchecker runs on-the-fly and provides quick fixes for better coding quality of shell scripts. The shfmt tool reformats the shell script. Use `shift + alt + f` to reformat the script.
+
+## Dev Notes
+
+This sections lists some notes on development practises.
+
+### UML Diagrams 
+
+A good practise is the documentation of concepts and ideas using UML diagrams. These diagrams can be referenced in markdown files as well as in jupyter notebooks. The following practise sources from https://stackoverflow.com/a/32771815
+
+1. Go to http://plantuml.com/plantuml/form and create an UML diagram using [plantuml](https://plantuml.com/). The website immediately renders the diagram.
+1. Copy the content from the form into a separate file, e.g. `mydiagram.uml`, and upload it with into your github repo, e.g. `github.com/<user>/<project>/mydiagram.uml`. 
+1. Return to http://plantuml.com/plantuml/form remove all content from the input form and just include the link to the UML file on github, e.g. `!includeurl https://raw.githubusercontent.com/<user>/<project>/master/mydiagram.uml`. You should see the rendered diagram.
+1. Copy the image URL from the `View as PNG` link below the input form. This URL is stable.
+1. Reference the image in your markdown file by `![image text](<image url>)`
+
+Note, the cool feature: Changing the diagram source file, i.e. `mydiagram.uml` on github, will result in a new rendered diagram image.
