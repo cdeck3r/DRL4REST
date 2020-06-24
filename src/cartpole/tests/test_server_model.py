@@ -28,10 +28,6 @@ class Test_ServerModel(unittest.TestCase):
     def test_add_pole_CRUD(self):
         model_name = 'pole'
         self._crud_funcs(model_name)
-        
-    def test_add_direction_CRUD(self):
-        model_name = 'direction'
-        self._crud_funcs(model_name)
 
 if __name__ == '__main__':
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test_ServerModel)

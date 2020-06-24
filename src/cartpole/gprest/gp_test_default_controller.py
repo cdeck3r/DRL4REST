@@ -54,8 +54,8 @@ class GP_TestDefaultController(TestDefaultController):
         self.score = -1
         self._prev_responses = []
         
-    def score_response(self, resp):
-        """Quantify the response, we use the status code as score
+    def score_get_response(self, resp):
+        """Quantify the GET response, we use the status code as score
 
         Parameters
         ----------
@@ -75,6 +75,21 @@ class GP_TestDefaultController(TestDefaultController):
             self.score -= resp.status_code
         
         self.score += resp.status_code
+
+    def score_put_response(self, direction, resp):
+        """Quantifies the PUT response
+
+        Parameters
+        ----------
+        direction : Direction
+            Direction object
+        resp : Response
+            Flask Response object, should be a Cart object
+        """
+        if direction.direction == resp.json['direction']:
+            self.score -= resp.status_code
+
+        self.score += resp.status_code 
     
     def endpoint_config(self, url_path, method, controller_func):
         """Changes the behavior of a url_path with a new controller function
@@ -118,7 +133,7 @@ class GP_TestDefaultController(TestDefaultController):
 
            Checks for the correct content_type in the responds.
         """
-        response = super().test_cart_put(direction) #assert200(response)
+        response = super().test_cart_put(direction.to_dict()) #assert200(response)
         # add another important assertion
         self.assertEqual(response.content_type, 
                     'application/vnd.cartpole.cart+json', 
@@ -139,7 +154,7 @@ class GP_TestDefaultController(TestDefaultController):
             self.score += self._assert_score
             return
             
-        self.score_response(response)
+        self.score_get_response(response)
 
     # safe version of test_cart_pole_get(), i.e. avoids exceptions 
     def safe_test_cart_pole_get(self):
@@ -154,4 +169,24 @@ class GP_TestDefaultController(TestDefaultController):
             self.score += self._assert_score
             return
             
-        self.score_response(response)
+        self.score_get_response(response)
+
+    # safe version of test_cart_pole_get(), i.e. avoids exceptions 
+    def safe_test_cart_put(self, direction):
+        """PUT request to /api/v1/cart
+
+        direction : Direction
+            Direction object
+        """
+        try:
+            response = super().test_cart_put(direction.to_dict()) #assert200(response)        
+            self.assertEqual(response.content_type, 
+                        'application/vnd.cartpole.cart+json', 
+                        'Please check the openapi.yaml for unique content-type in response section'
+                       )
+        except AssertionError as error:
+            # score an assertion
+            self.score += self._assert_score
+            return
+            
+        self.score_put_response(direction, response)

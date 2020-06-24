@@ -5,6 +5,7 @@ import random
 import math 
 from openapi_server.models import Cart
 from openapi_server.models import Pole
+from openapi_server.models import Direction
 
 class CartpoleServer(object):
 
@@ -18,12 +19,16 @@ class CartpoleServer(object):
     _pole = None
     _direction = None
 
+    # stores data from client
+    _from_client = None
+
     # set the class in a defined (initial) state
     @classmethod
     def reset(cls):
         cls._cart = None
         cls._pole = None
         cls._direction = None
+        cls._from_client = None
     
     @classmethod
     def create_cart(cls):
@@ -37,11 +42,23 @@ class CartpoleServer(object):
     @classmethod
     def read_cart(cls):
         return cls._cart
-    
+
     @classmethod
     def update_cart(cls):
-        if isinstance(cls._cart, Cart):
-            cls._cart.direction='left'
+        # this check makes the operation safe
+        if isinstance(cls._cart, Cart) and cls._from_client is not None:
+            # encapsulating makes the operation safe when process. data
+            try:
+                # 1. de-serialize _from_client
+                # 2. update
+                # 3. reset _from_client data
+                direction_from_client = Direction.from_dict(cls._from_client) 
+                if isinstance(direction_from_client, Direction):
+                    cls._cart.direction = direction_from_client.direction
+                    cls._from_client = None
+            except: 
+                # someting went wrong, we can't handle
+                pass
 
     @classmethod
     def delete_cart(cls):
@@ -70,23 +87,19 @@ class CartpoleServer(object):
 
     @classmethod
     def create_direction(cls):
-        direction = random.choice(['left', 'right'])
-        # we know the values from the models, e.g.
-        #   models/pole.py 
-        cls._direction = Direction(direction=direction)
-
-    @classmethod
-    def read_direction(cls):
-        return cls._direction
+        raise NotImplementedError("Direction have no create method")
     
     @classmethod
-    def update_direction(cls, direction):
-        cls._direction = direction
+    def read_direction(cls):
+        raise NotImplementedError("Direction have no read method")
+
+    @classmethod
+    def update_direction(cls):
+        raise NotImplementedError("Direction have no read method")
 
     @classmethod
     def delete_direction(cls):
-        cls._direction = None
-
+        raise NotImplementedError("Direction have no delete method")
 
 #############################################
 #
@@ -123,17 +136,9 @@ def add_CRUD_pset(pset, sm, model_name):
         pset.addTerminal(sm.update_pole)
         pset.addTerminal(sm.delete_pole)
         
-    def pset_direction():
-        # cart CRUD functions
-        pset.addTerminal(sm.create_direction)
-        pset.addTerminal(sm.read_direction)
-        pset.addTerminal(sm.update_direction)
-        pset.addTerminal(sm.delete_direction)
-
     options = {
         'cart': pset_cart,
         'pole': pset_pole,
-        'direction': pset_direction,
     }
 
     # add CRUD functions to pset

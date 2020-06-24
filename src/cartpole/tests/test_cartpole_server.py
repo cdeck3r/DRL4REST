@@ -56,10 +56,6 @@ class Test_CartpoleServer(unittest.TestCase):
         model_name = 'pole'
         self._crud_funcs(model_name)
 
-    def test_CRUD_direction(self):
-        model_name = 'direction'
-        self._crud_funcs(model_name)
-
 
 if __name__ == '__main__':
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test_CartpoleServer)
