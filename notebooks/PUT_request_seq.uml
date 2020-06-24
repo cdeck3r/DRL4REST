@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam componentStyle uml2
+
+actor Client as client
+boundary "Flask Webserver" as flask
+control GP_Controller as gpc
+entity CartpoleServer as cps
+
+activate client
+client -> client: to_json( Direction('left') ) 
+client -> flask: PUT /api/v1/cart; [json]
+
+flask -> gpc: return_cart_put()
+activate gpc
+gpc -> cps: [json]
+
+note right
+store submitted 
+json data
+endnote
+
+gpc -> cps: update_cart()
+activate cps
+cps -> cps: de-serialize
+
+note right 
+creates an object of 
+type Direction('left')
+endnote
+
+cps -> cps: update direction in Cart
+cps -> cps: delete [json]
+gpc -> cps: read_cart()
+deactivate cps
+cps --> gpc: Cart
+gpc --> flask: return Cart
+deactivate gpc
+
+flask --> client: response(Cart)
+deactivate client
+@enduml
