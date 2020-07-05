@@ -1,5 +1,3 @@
-import conftest
-
 import unittest
 from cartpole.gprest.gp_test_default_controller import GP_TestDefaultController
 from cartpole.gprest.monkey_patching import MonkeyPatching

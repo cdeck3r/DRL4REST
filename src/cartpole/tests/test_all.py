@@ -9,10 +9,15 @@ for py in [f[:-3] for f in os.listdir(path) if f.endswith('.py')
             and not f.endswith('conftest.py')]:
     mod = __import__('.'.join([py]), fromlist=[py])
     classes = [getattr(mod, x) for x in dir(mod) if isinstance(getattr(mod, x), type)]
-    for cls in classes:
-        setattr(sys.modules[__name__], cls.__name__, cls)
+#    for cls in classes:
+#        setattr(sys.modules[__name__], cls.__name__, cls)
 
 import unittest
+
+from cartpole.tests.test_cartpole_server import Test_CartpoleServer
+from cartpole.tests.test_gp_testdefaultcontroller import Test_GP_TestDefaultController
+from test_monkey_patching import Test_MonkeyPatching
+from test_server_model import Test_ServerModel
 
 if __name__ == '__main__':
     # add each TestCase to TestSuite

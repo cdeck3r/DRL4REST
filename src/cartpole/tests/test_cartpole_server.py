@@ -1,5 +1,3 @@
-import conftest
-
 import unittest
 from cartpole.gprest.server_model import CartpoleServer
 from openapi_server.models import Cart
