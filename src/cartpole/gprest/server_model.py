@@ -3,6 +3,7 @@
 
 import random
 import math 
+import copy
 from openapi_server.models import Cart
 from openapi_server.models import Pole
 from openapi_server.models import Direction
@@ -22,6 +23,9 @@ class CartpoleServer(object):
     # stores data from client
     _from_client = None
 
+    # list of ServerModel instances
+    _sm_instances = None
+
     # set the class in a defined (initial) state
     @classmethod
     def reset(cls):
@@ -30,6 +34,29 @@ class CartpoleServer(object):
         cls._direction = None
         cls._from_client = None
     
+    # creates n instances of the ServerModel
+    @classmethod
+    def n_model_instances(cls, n=10):
+        cls._sm_instances = []
+        for i in range(n):
+            # create instance
+            inst = cls()
+
+            # add class vars as instance vars
+            cls_vars = [k for k in dir(cls)
+                        if not k.startswith(('__', 'create', 'read', 'update', 'delete', 'reset')) # standard CRUD
+                        and not k.startswith(('_from_client')) # data 
+                        and not k.startswith(('_sm_instances', 'n_model_instances')) # other methods and vars
+                        ]
+
+            # deep copy
+            for var in cls_vars:
+                org_val = vars(cls)[var]
+                setattr(inst, var, copy.deepcopy(org_val))
+            
+            # add to list
+            cls._sm_instances.append(inst)
+
     @classmethod
     def create_cart(cls):
         position = random.random()
