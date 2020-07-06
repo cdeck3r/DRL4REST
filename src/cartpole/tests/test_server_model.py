@@ -1,3 +1,4 @@
+import random
 import unittest
 from deap import gp
 from cartpole.gprest.server_model import CartpoleServer
@@ -11,6 +12,7 @@ class Test_ServerModel(unittest.TestCase):
         self.cps_crud_func = [func for func in dir(self.s) if callable(getattr(self.s, func)) 
                and not func.startswith('__')
                and not func.startswith('reset')]
+        self.s.reset()
     
     def _crud_funcs(self, model_name):
         cps_model_func = [m for m in self.cps_crud_func if m.endswith(model_name)]
@@ -26,6 +28,16 @@ class Test_ServerModel(unittest.TestCase):
     def test_add_pole_CRUD(self):
         model_name = 'pole'
         self._crud_funcs(model_name)
+
+    # Assert there are the number of instances created 
+    # and they are all different.
+    def test_instances(self):
+        num_instances = random.randint(1,100)
+        self.s.n_instances(n=num_instances)
+        all_inst = self.s._instances
+
+        self.assertEqual(len(all_inst), num_instances)
+        self.assertEqual(len(set(all_inst)), num_instances)
 
 if __name__ == '__main__':
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test_ServerModel)

@@ -24,7 +24,7 @@ class CartpoleServer(object):
     _from_client = None
 
     # list of ServerModel instances
-    _sm_instances = None
+    _instances = None
 
     # set the class in a defined (initial) state
     @classmethod
@@ -35,27 +35,39 @@ class CartpoleServer(object):
         cls._from_client = None
     
     # creates n instances of the ServerModel
+    # it is a factory method
     @classmethod
-    def n_model_instances(cls, n=10):
-        cls._sm_instances = []
-        for i in range(n):
-            # create instance
-            inst = cls()
+    def n_instances(cls, n=10, init_w_data=True):
+        create_methods = [k for k in dir(cls) if k.startswith('create')]
 
-            # add class vars as instance vars
+        def init_data():
+            for c in create_methods:
+                try:
+                    # calls all create_* methods  
+                    vars(cls)[c].__get__(None, cls)()
+                except:
+                    pass
+
+        # reset instances
+        cls._instances = []
+        for i in range(n):
+            # 1. create instance 
+            inst = cls()
+            # 2. add class vars as instance vars
             cls_vars = [k for k in dir(cls)
                         if not k.startswith(('__', 'create', 'read', 'update', 'delete', 'reset')) # standard CRUD
                         and not k.startswith(('_from_client')) # data 
-                        and not k.startswith(('_sm_instances', 'n_model_instances')) # other methods and vars
+                        and not k.startswith(('_instances', 'n_instances')) # other methods and vars
                         ]
-
-            # deep copy
+            # 3. init class with data 
+            if init_w_data:
+                init_data()
+            # 4. ... and deep copy the class vars into instance vars
             for var in cls_vars:
                 org_val = vars(cls)[var]
                 setattr(inst, var, copy.deepcopy(org_val))
-            
-            # add to list
-            cls._sm_instances.append(inst)
+            # 5. add to list
+            cls._instances.append(inst)
 
     @classmethod
     def create_cart(cls):
