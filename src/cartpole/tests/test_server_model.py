@@ -7,11 +7,11 @@ import cartpole.gprest.server_model as sm
 
 # small test routine for the ServerModel
 class Test_ServerModel(unittest.TestCase):
-
     def setUp(self):
         self.s = CartpoleServer
         self.cps_crud_func = [
-            func for func in dir(self.s)
+            func
+            for func in dir(self.s)
             if callable(getattr(self.s, func))
             and not func.startswith('__')
             and not func.startswith('reset')

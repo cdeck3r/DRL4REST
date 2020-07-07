@@ -11,7 +11,8 @@ class Test_CartpoleServer(unittest.TestCase):
     def setUp(self):
         self.s = CartpoleServer
         self.cps_crud_func = [
-            func for func in dir(self.s)
+            func
+            for func in dir(self.s)
             if callable(getattr(self.s, func))
             and not func.startswith('__')
             and not func.startswith('reset')
@@ -52,9 +53,7 @@ class Test_CartpoleServer(unittest.TestCase):
             crud_func + '_' + model_name
             for crud_func in ['create', 'read', 'update', 'delete']
         ]
-        cps_model_func = [
-            m for m in self.cps_crud_func if m.endswith(model_name)
-        ]
+        cps_model_func = [m for m in self.cps_crud_func if m.endswith(model_name)]
 
         self.assertEqual(set(cps_model_func), set(model_crud))
 

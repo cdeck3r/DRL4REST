@@ -4,7 +4,6 @@ from openapi_server.models import Cart
 
 
 class Test_GP_TestDefaultController(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
