@@ -7,6 +7,7 @@ from cartpole.tests.test_cartpole_server import Test_CartpoleServer
 from cartpole.tests.test_gp_testdefaultcontroller import Test_GP_TestDefaultController
 from test_monkey_patching import Test_MonkeyPatching
 from test_server_model import Test_ServerModel
+from test_server_model_regression import Test_ServerModelRegression
 
 
 # auto-loading classes from test_*.py
@@ -33,5 +34,8 @@ if __name__ == '__main__':
     )
     suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(Test_MonkeyPatching))
     suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(Test_ServerModel))
+    suite.addTest(
+        unittest.defaultTestLoader.loadTestsFromTestCase(Test_ServerModelRegression)
+    )
     # run suite
     unittest.TextTestRunner(verbosity=2).run(suite)
