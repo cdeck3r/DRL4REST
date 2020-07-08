@@ -15,7 +15,7 @@ class CartpoleServer(object):
     The ServerModel is a static class. The GP controller utilizes the model to store state between successive calls. The ServerModel provides CRUD functions for state access and manipulation.
     """
 
-    # state as class variable
+    # model states as class variable
     _cart = None
     _pole = None
     _direction = None
@@ -33,7 +33,19 @@ class CartpoleServer(object):
         cls._pole = None
         cls._direction = None
         cls._from_client = None
-    
+
+    # Returns the names of the models states 
+    @classmethod
+    def states_varnames(cls):
+        cls_vars = [k for k in dir(cls)
+                    if not k.startswith(('__')) # generic
+                    and not k.startswith(('reset')) # state management
+                    and not k.startswith(('create', 'read', 'update', 'delete')) # standard CRUD
+                    and not k.startswith(('_from_client', '_instances')) # data and other vars
+                    and not k.startswith(('n_instances', 'states_varnames')) # other methods
+                    ]
+        return cls_vars
+
     # creates n instances of the ServerModel
     # it is a factory method
     @classmethod
@@ -53,12 +65,8 @@ class CartpoleServer(object):
         for i in range(n):
             # 1. create instance 
             inst = cls()
-            # 2. add class vars as instance vars
-            cls_vars = [k for k in dir(cls)
-                        if not k.startswith(('__', 'create', 'read', 'update', 'delete', 'reset')) # standard CRUD
-                        and not k.startswith(('_from_client')) # data 
-                        and not k.startswith(('_instances', 'n_instances')) # other methods and vars
-                        ]
+            # 2. get class variables 
+            cls_vars = cls.states_varnames()
             # 3. init class with data 
             if init_w_data:
                 init_data()

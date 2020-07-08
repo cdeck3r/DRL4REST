@@ -112,6 +112,12 @@ class Test_CartpoleServer(unittest.TestCase):
         self.assertEqual(len(set(all_inst)), num_instances)
         self.assertTrue(any(vars(x) == vars(all_inst[0]) for x in all_inst))
 
+    def test_states_varnames(self):
+        model_names = self.s.states_varnames()
+        self.assertIn('_cart', model_names)
+        self.assertIn('_pole', model_names)
+        self.assertIn('_direction', model_names)
+
 
 if __name__ == '__main__':
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(Test_CartpoleServer)
