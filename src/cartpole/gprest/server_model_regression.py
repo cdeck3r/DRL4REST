@@ -3,9 +3,11 @@
 import random
 import math 
 import copy
+import statistics
 from openapi_server.models import Cart
 from openapi_server.models import Pole
 from openapi_server.models import Direction
+from cartpole.gprest.server_model import CartpoleServer
 
 
 class ServerModelRegression(object):
@@ -18,6 +20,7 @@ class ServerModelRegression(object):
         self.ms_names = self.sm.states_varnames()
         self.sm_curr = None
         self.ms_list = []
+        self.sm_regressand = None
 
     # makes a deep copy of the current model states of the ServerModel
     def save_current_states(self):
@@ -85,5 +88,86 @@ class ServerModelRegression(object):
         else:
             return ms_list2
 
+
+class CartpoleServerRegression(ServerModelRegression):
+    """Runs a regression on the Cartpole ServerModel
+
+    This class defines the primitive operations specific for the CartpoleServer.
+    """
+
+    class CartpoleSum(object):
+        """Sums model states by type, i.e. Cart, Pole, Direction.
+
+        """
+        def __init__(self):
+            # list of model states in CartpoleServer
+            self._cart_list = []
+            self._pole_list = []
+            self._direction_list = []
+            # model states, make them explicity by defining them
+            self._cart = None
+            self._pole = None
+            self._direction = None
+
+        def sum_cart(self):
+            position = statistics.mean([c.position for c in self._cart_list])
+            velocity = statistics.mean([c.velocity for c in self._cart_list])
+            direction_left = [c.direction for c in self._cart_list].count('left')
+            direction_right = [c.direction for c in self._cart_list].count('right')
+            if direction_left >= direction_right:
+                direction = 'left'
+            else:
+                direction = 'right'
+            self._cart = Cart(position=position, velocity=velocity, direction=direction)
+
+        def sum_pole(self):
+            angle = statistics.mean([p.angle for p in self._pole_list])
+            velocity = statistics.mean([p.velocity for p in self._pole_list])
+            self._pole = Pole(angle=angle, velocity=velocity)
+
+        def sum_direction(self):
+            direction_left = [d.direction for d in self._direction_list].count('left')
+            direction_right = [d.direction for d in self._direction_list].count('right')
+            if direction_left >= direction_right:
+                direction = 'left'
+            else:
+                direction = 'right'
+            self._direction = Direction(direction=direction)
+
+        def __add__(self, ms):
+            if isinstance(ms, Cart):
+                self._cart_list.append(ms)
+                self.sum_cart()
+            elif isinstance(ms, Pole):
+                self._pole_list.append(ms)
+                self.sum_pole()
+            elif isinstance(ms, Direction):
+                self._direction_list.append(ms)
+                self.sum_direction()
+
+            return self
+
+    def __init__(self):
+        super().__init__(CartpoleServer)
+
+    # sum is specific for CartpoleServer
+    # it computes avg values across model states
     def sum(self, ms_list):
-        pass
+        # uses the builtin sum operation
+        # providing a start object with overrides add operator
+        # to add each element of ms_list 
+        cs = self.CartpoleSum()
+        if ms_list is not None:
+            cs = sum(ms_list, cs)
+
+        # create ServerModel instance as regressand
+        self.sm_regressand = self.sm()
+        for var in self.ms_names:
+            try:
+                ms_val = vars(cs)[var]
+                setattr(self.sm_regressand, var, ms_val)
+            except:
+                # var does not exist in sum object, so continue
+                continue
+
+        return self.sm_regressand
