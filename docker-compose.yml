@@ -98,36 +98,43 @@ services:
 # 
 volumes:
   repo:
+    driver: local
     driver_opts:
       type: none
       device: ${VOL_DIR}/
       o: bind
   vscode:
+    driver: local
     driver_opts:
       type: none
       device: ${VOL_DIR}/vscode
       o: bind
   log:
+    driver: local
     driver_opts:
       type: none
       device: ${VOL_DIR}/log
       o: bind
   src:
+    driver: local
     driver_opts:
       type: none
       device: ${VOL_DIR}/src
       o: bind
   scripts:
+    driver: local
     driver_opts:
       type: none
       device: ${VOL_DIR}/scripts
       o: bind
   openapi:
+    driver: local
     driver_opts:
       type: none
       device: ${VOL_DIR}/openapi
       o: bind
   notebooks:
+    driver: local
     driver_opts:
       type: none
       device: ${VOL_DIR}/notebooks
